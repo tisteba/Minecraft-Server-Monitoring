@@ -1,0 +1,15 @@
+{
+  "name": "minecraft-server-monitoring",
+  "version": "1.0.0",
+  "description": "**Membres du groupe** : Vicenzzo Maciel Rigo, Anthony Goasdoué, Baptiste Renou",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.21.2"
+  }
+}
