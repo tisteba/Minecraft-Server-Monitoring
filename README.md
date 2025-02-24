@@ -43,3 +43,23 @@ OS du serveur : Rocky linux
     Compatible avec nos besoins de monitoring via des outils comme Grafana, Prometheus et Cockpit.
     
     Permet de contrôler notre serveur depuis une interface web pour démarrer/arrêter le serveur, gérer les joueurs et modifier les configs.
+
+
+/MineServeur
+│
+├── /backend                  # Code du serveur Express
+│   ├── /controllers          # Logique des routes
+│   ├── /models               # Modèles de base de données
+│   ├── /routes               # Routes API
+│   ├── /config               # Configuration de la base de données
+│   ├── app.js                # Initialisation de l'application Express
+│   └── server.js             # Démarrage du serveur
+│
+├── /frontend                 # Code du frontend
+│   ├── /css                  # Feuilles de style
+│   ├── /js                   # Scripts JS
+│   └── index.html            # Page principale
+│
+├── /node_modules             # Dépendances npm
+├── package.json              # Gestion des dépendances
+└── .env                      # Variables d'environnement (pour la DB, etc.)
