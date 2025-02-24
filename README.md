@@ -1,6 +1,43 @@
-lien du git : https://github.com/tisteba/Minecraft-Server-Monitoring.git
+# Hébergement d'un serveur Minecraft Bedrock Edition avec gestion via une interface web
+
+**Membres du groupe** : Vicenzzo Maciel Rigo, Anthony Goasdoué, Baptiste Renou
+
+## Objectifs :
+
+**Hébergement du serveur Minecraft :**
+
+ - Installer et configurer un serveur Minecraft Bedrock Edition sur une VM avec Rocky Linux.
+
+- Optimiser les performances du serveur.
+
+**Gestion via une interface web :**
+
+Créer une interface web permettant de :
+
+- Surveiller les performances du serveur (utilisation CPU, RAM, espace disque, etc.).
+
+- Effectuer des actions administratives à distance, comme démarrer/arrêter le serveur, modifier le nombre de joueurs max, bannir des joueurs, etc.
+
+**Monitoring et Maintenance :**
+
+- Mettre en place des outils de monitoring (ex : Grafana, Prometheus) pour suivre l'état du serveur.
+
+- Ajouter des fonctionnalités d'alertes (ex : notifications lorsque les performances sont faibles).
+
+
+ **Amélioration et évolutivité :**
+
+Début avec une VM, puis envisager le passage à un serveur dédié si nécessaire, en fonction des performances et des besoins.
+
+
+---
+
+Lien du git :
+ https://github.com/tisteba/Minecraft-Server-Monitoring.git
+
 
 OS du serveur : Rocky linux
+
 
 🌟 Pourquoi Rocky Linux pour notre serveur Minecraft Bedrock ?
 1️⃣ Stabilité et Fiabilité 🏗️
@@ -43,23 +80,3 @@ OS du serveur : Rocky linux
     Compatible avec nos besoins de monitoring via des outils comme Grafana, Prometheus et Cockpit.
     
     Permet de contrôler notre serveur depuis une interface web pour démarrer/arrêter le serveur, gérer les joueurs et modifier les configs.
-
-
-/MineServeur
-│
-├── /backend                  # Code du serveur Express
-│   ├── /controllers          # Logique des routes
-│   ├── /models               # Modèles de base de données
-│   ├── /routes               # Routes API
-│   ├── /config               # Configuration de la base de données
-│   ├── app.js                # Initialisation de l'application Express
-│   └── server.js             # Démarrage du serveur
-│
-├── /frontend                 # Code du frontend
-│   ├── /css                  # Feuilles de style
-│   ├── /js                   # Scripts JS
-│   └── index.html            # Page principale
-│
-├── /node_modules             # Dépendances npm
-├── package.json              # Gestion des dépendances
-└── .env                      # Variables d'environnement (pour la DB, etc.)
