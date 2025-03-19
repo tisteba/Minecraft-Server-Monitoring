@@ -3,6 +3,8 @@
 # Couleurs ANSI
 brown='\033[38;5;94m'   # Marron pour la terre
 green='\033[38;5;28m'   # Vert pour l'herbe
+YELLOW='\033[1;33m'
+BLUE='\033[0;34m'
 reset='\033[0m'         # Reset couleur
 
 clear
@@ -18,17 +20,17 @@ echo -e "               ╰------------╯ ${reset}"
 echo
 
 # Affichage du message
-echo "============================================="
-echo -e "         ${green}Bienvenue sur MineServer ! ${reset}"
-echo "============================================="
+echo -e " ${BLUE}============================================= ${reset}"
+echo -e "           ${green}Bienvenue sur MineServer ! ${reset}"
+echo -e " ${BLUE}============================================= ${reset}"
 echo
 echo "Votre serveur Minecraft à portée de main !"
 echo "Configurez-le facilement en quelques étapes."
 
 # Menu principal
-echo "============================================="
-echo -e "         ${brown}Menu${reset}"
-echo "============================================="
+echo -e "${BLUE}============================================= ${reset}"
+echo -e "                    ${green}Menu${reset}"
+echo -e "${BLUE}============================================= ${reset}"
 echo "1) Démarrer le serveur"
 echo "2) Configuration"
 echo "3) Je ne sais pas"
