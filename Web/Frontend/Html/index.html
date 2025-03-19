@@ -4,26 +4,44 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Contrôle Serveur Minecraft</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <link rel="stylesheet" href="../css/static.css">
 </head>
 <body>
     <div class="container">
-        <h1>Contrôle du Serveur Minecraft</h1>
+        <div class="header">
+            <img src="https://www.minecraft.net/content/dam/minecraft/pack.png" alt="Minecraft Logo">
+            <h1>Contrôle du Serveur Minecraft</h1>
+        </div>
 
+        <!-- Boutons de contrôle -->
         <div class="controls">
-            <button id="start-btn">Démarrer le serveur</button>
-            <button id="stop-btn">Arrêter le serveur</button>
-            <button id="restart-btn">Redémarrer le serveur</button>
+            <button id="start-btn"><i class="fas fa-play"></i> Démarrer</button>
+            <button id="stop-btn"><i class="fas fa-stop"></i> Arrêter</button>
+            <button id="restart-btn"><i class="fas fa-sync-alt"></i> Redémarrer</button>
+        </div>
+
+        <!-- Console SSH -->
+        <div class="console">
+            <h2><i class="fas fa-terminal"></i> Console SSH</h2>
+            <pre id="ssh-console">Connexion SSH en cours...</pre>
+            <div class="command-wrapper">
+                <input type="text" id="command-input" placeholder="Entrez une commande..." />
+            </div>
         </div>
         
-        <div class="console">
-            <h2>Console du serveur</h2>
-            <pre id="stats">Chargement des données...</pre>
-            
-            <input type="text" id="command-input" placeholder="Entrez une commande..." />
-        </div>
+        <div class="server-stats"></div>
+            <h2><i class="fas fa-chart-line"></i> Statistiques du Serveur</h2>
+            <div id="stats">
+                <p>CPU: <span id="cpu-usage">Chargement...</span></p>
+                <p>Température: <span id="cpu-temp">Chargement...</span></p>
+                <p>RAM: <span id="ram-usage">Chargement...</span></p>
+            </div>
+        <footer>
+            &copy; 2023 Minecraft Server Monitoring - Développé avec ❤️
+        </footer>
     </div>
 
-    <script src="js/script.js"></script>
+    <script src="../js/script.js"></script>
 </body>
 </html>
