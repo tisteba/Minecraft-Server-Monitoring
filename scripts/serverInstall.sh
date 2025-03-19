@@ -1,7 +1,5 @@
 #!/bin/bash
 
-source ./utils.sh
-
 
 install_server() {
     folder_name="bedrock-server"
@@ -77,5 +75,5 @@ install_server() {
     else
         echo "Le serveur est déjà installé."
     fi
-    run_script "mineserver.sh"
+    run_script "mineserver"
 }

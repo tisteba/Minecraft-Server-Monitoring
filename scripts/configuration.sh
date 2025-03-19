@@ -1,7 +1,5 @@
 #!/bin/bash
 
-source "./utils.sh"
-
 SERVER_PROPERTIES_FILE="server.properties"
 
 # Couleurs pour le texte
@@ -9,7 +7,7 @@ RED='\033[0;31m'
 GREEN='\033[0;32m'
 YELLOW='\033[1;33m'
 BLUE='\033[0;34m'
-NC='\033[0m' # No Color
+NC='\033[0m' 
 
 # Fonction pour afficher un résumé des modifications
 summary() {
@@ -160,5 +158,3 @@ case $choice in
         echo -e "${RED}Option invalide. Veuillez choisir 1 ou 2.${NC}"
         ;;
 esac
-
-run_script "mineserver.sh"
