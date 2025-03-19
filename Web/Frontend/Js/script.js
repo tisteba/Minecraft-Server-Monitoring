@@ -16,17 +16,16 @@ document.getElementById('restart-btn').addEventListener('click', () => {
         .then(message => alert(message));
 });
 
-// Connexion WebSocket pour récupérer les statistiques du serveur
-const ws = new WebSocket('ws://localhost:3000');
+const ws = new WebSocket('ws://localhost:8080');
 ws.onmessage = function(event) {
-    const data = JSON.parse(event.data);
-    if (data.cpu) {
-        document.getElementById('cpu').textContent = `CPU Usage: ${data.cpu}`;
-    }
-    if (data.ram) {
-        document.getElementById('ram').textContent = `RAM Usage: ${data.ram}`;
-    }
-    if (data.disk) {
-        document.getElementById('disk').textContent = `Disk Usage: ${data.disk}`;
-    }
+    const data = event.data;
+    document.getElementById('stats').innerText = data;
 };
+
+document.getElementById('command-input').addEventListener('keydown', (event) => {
+    if (event.key === 'Enter') {
+        const command = event.target.value;
+        ws.send(command);
+        event.target.value = '';
+    }
+});

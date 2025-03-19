@@ -3,24 +3,27 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Monitor Minecraft Server</title>
-    <link rel="stylesheet" href="Css/static.css">
+    <title>Contrôle Serveur Minecraft</title>
+    <link rel="stylesheet" href="../css/static.css">
 </head>
 <body>
-    <div id="server-status">
-        <h1>Server Status: <span id="status">Offline</span></h1>
-        <button id="start-btn">Start Server</button>
-        <button id="stop-btn">Stop Server</button>
-        <button id="restart-btn">Restart Server</button>
+    <div class="container">
+        <h1>Contrôle du Serveur Minecraft</h1>
+
+        <div class="controls">
+            <button id="start-btn">Démarrer le serveur</button>
+            <button id="stop-btn">Arrêter le serveur</button>
+            <button id="restart-btn">Redémarrer le serveur</button>
+        </div>
+        
+        <div class="console">
+            <h2>Console du serveur</h2>
+            <pre id="stats">Chargement des données...</pre>
+            
+            <input type="text" id="command-input" placeholder="Entrez une commande..." />
+        </div>
     </div>
 
-    <div id="stats">
-        <h2>Server Stats</h2>
-        <div id="cpu">CPU Usage: </div>
-        <div id="ram">RAM Usage: </div>
-        <div id="disk">Disk Usage: </div>
-    </div>
-
-    <script src="Js/script.js"></script>
+    <script src="js/script.js"></script>
 </body>
 </html>
