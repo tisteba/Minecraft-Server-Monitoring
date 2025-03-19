@@ -1,30 +1,32 @@
-function startServer() {
-    const statusContainer = document.getElementById('serverStatus');
-    const button = document.getElementById('serverButton');
-    
-    if (statusContainer.innerText === "Server is OFF") {
-        fetch('/startserver')
-            .then(response => response.text())
-            .then(data => {
-                statusContainer.innerText = "Server is ON";
-                statusContainer.classList.remove('has-text-danger');
-                statusContainer.classList.add('has-text-success');
-                button.innerText = "Stop Server";
-                button.classList.remove('is-primary');
-                button.classList.add('is-danger');
-            })
-            .catch(error => console.error('Erreur:', error));
-    } else if (statusContainer.innerText === "Server is ON") {
-        fetch('/stopserver')
-            .then(response => response.text())
-            .then(data => {
-                statusContainer.innerText = "Server is OFF";
-                statusContainer.classList.remove('has-text-success');
-                statusContainer.classList.add('has-text-danger');
-                button.innerText = "Start Server";
-                button.classList.remove('is-danger');
-                button.classList.add('is-success');
-            })
-            .catch(error => console.error('Erreur:', error));
+document.getElementById('start-btn').addEventListener('click', () => {
+    fetch('/startserver')
+        .then(response => response.text())
+        .then(message => alert(message));
+});
+
+document.getElementById('stop-btn').addEventListener('click', () => {
+    fetch('/stopserver')
+        .then(response => response.text())
+        .then(message => alert(message));
+});
+
+document.getElementById('restart-btn').addEventListener('click', () => {
+    fetch('/restartserver')
+        .then(response => response.text())
+        .then(message => alert(message));
+});
+
+// Connexion WebSocket pour récupérer les statistiques du serveur
+const ws = new WebSocket('ws://localhost:3000');
+ws.onmessage = function(event) {
+    const data = JSON.parse(event.data);
+    if (data.cpu) {
+        document.getElementById('cpu').textContent = `CPU Usage: ${data.cpu}`;
     }
-}
+    if (data.ram) {
+        document.getElementById('ram').textContent = `RAM Usage: ${data.ram}`;
+    }
+    if (data.disk) {
+        document.getElementById('disk').textContent = `Disk Usage: ${data.disk}`;
+    }
+};

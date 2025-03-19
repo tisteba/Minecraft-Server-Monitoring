@@ -1,21 +1,26 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="fr">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bulma@1.0.2/css/bulma.min.css">
-    <title>Minecraft Server Monitoring</title>
+    <title>Monitor Minecraft Server</title>
+    <link rel="stylesheet" href="Css/static.css">
 </head>
 <body>
-    <header>
-        <h1 class="is-marginless">Mineserver</h1>
-    </header>
-    <main>
-        <button class="button is-success" onclick="startServer()" id="serverButton">Start Server</button>
-        <p id="serverStatus" class="has-text-danger">Server is OFF</p>            </main>
-    <footer>
-        <p>&copy; 2025 Mineserver</p>
-    </footer>
-    <script src="../Js/script.js"></script>
+    <div id="server-status">
+        <h1>Server Status: <span id="status">Offline</span></h1>
+        <button id="start-btn">Start Server</button>
+        <button id="stop-btn">Stop Server</button>
+        <button id="restart-btn">Restart Server</button>
+    </div>
+
+    <div id="stats">
+        <h2>Server Stats</h2>
+        <div id="cpu">CPU Usage: </div>
+        <div id="ram">RAM Usage: </div>
+        <div id="disk">Disk Usage: </div>
+    </div>
+
+    <script src="Js/script.js"></script>
 </body>
 </html>
