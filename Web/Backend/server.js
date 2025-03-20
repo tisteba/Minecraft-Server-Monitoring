@@ -29,7 +29,11 @@ let sshStream;
 app.use(express.static(path.join(__dirname, "../Frontend")));
 
 app.get("/", (req, res) => {
-    res.sendFile(path.join(__dirname, "../Frontend/Html/index.html"));
+    res.sendFile(path.join(__dirname, "../Frontend/Html/presentation.html"));
+});
+
+app.get("/monitoring", (req, res) => {
+  res.sendFile(path.join(__dirname, "../Frontend/Html/index.html"));
 });
 
 

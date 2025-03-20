@@ -1,32 +1,123 @@
 <!DOCTYPE html>
-<html lang="fr">
+<html lang="fr" data-theme="dark">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Monitoring Minecraft</title>
-    <link rel="stylesheet" href="../Css/static.css">
+    <title>MineServer - Tableau de bord</title>
+    <!-- Styles communs -->
+    <link rel="stylesheet" href="../Css/common/base.css">
+    <link rel="stylesheet" href="../Css/common/components.css">
+    <!-- Styles spécifiques -->
+    <link rel="stylesheet" href="../Css/pages/dashboard.css">
+    <link rel="stylesheet" href="../Css/pages/presentation.css">
+
+    <!-- Icônes -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+    <!-- Dépendances JS -->
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
-    <h1>Monitoring Minecraft Server</h1>
+    <!-- Navigation -->
+    <div class="menu-toggle" id="menuToggle">
+        <i class="fas fa-bars"></i>
+    </div>
+    
+    <div class="theme-toggle" id="themeToggle">
+        <i class="fas fa-moon"></i>
+    </div>
+    
+    <div class="side-menu" id="sideMenu">
+        <div class="menu-header">
+            <h3>Menu</h3>
+            <div class="menu-close" id="menuClose"><i class="fas fa-times"></i></div>
+        </div>
+        <ul class="menu-items">
+            <li><a href="index.html" class="active"><i class="fas fa-home"></i> Accueil</a></li>
+            <li><a href="presentation.html"><i class="fas fa-info-circle"></i> À propos</a></li>
+            <li><a href="#"><i class="fas fa-server"></i> Serveur</a></li>
+            <li><a href="#"><i class="fas fa-chart-line"></i> Statistiques</a></li>
+            <li><a href="#"><i class="fas fa-users"></i> Joueurs</a></li>
+            <li><a href="#"><i class="fas fa-cog"></i> Paramètres</a></li>
+        </ul>
+    </div>
+    
+    <div class="overlay" id="overlay"></div>
 
-    <div id="terminal-container"></div>
-    <input type="text" id="command" placeholder="Entrez une commande...">
-    <button onclick="sendCommand()">Exécuter</button>
+    <!-- Contenu principal -->
+    <main>
+        <header class="dashboard-header">
+            <div class="header-content">
+                <div class="project-logo">
+                    <i class="fas fa-cube"></i>
+                </div>
+                <div class="title-with-status">
+                    <h1>MineServer</h1>
+                    <span class="server-status status-offline" id="serverStatus">Offline</span>
+                </div>
+            </div>
+        </header>
 
-    <h2>Contrôle du serveur</h2>
-    <button onclick="serverAction('start')">Démarrer</button>
-    <button onclick="serverAction('restart')">Redémarrer</button>
-    <button onclick="serverAction('stop')">Arrêter</button>
+        <section class="terminal-section">
+            <div id="terminal-container"></div>
+        </section>
+        
+        <section class="command-section">
+            <div class="command-input">
+                <input type="text" id="command" placeholder="Entrez une commande..." autofocus>
+                <button onclick="sendCommand()"><i class="fas fa-terminal"></i> Exécuter</button>
+            </div>
+            
+            <div class="button-group">
+                <button onclick="serverAction('start')"><i class="fas fa-play"></i> Démarrer</button>
+                <button onclick="serverAction('restart')"><i class="fas fa-sync"></i> Redémarrer</button>
+                <button onclick="serverAction('stop')"><i class="fas fa-stop"></i> Arrêter</button>
+            </div>
+        </section>
 
-    <h2>Utilisation des ressources</h2>
-    <p>CPU : <span id="cpuUsage">0%</span></p>
-    <p>RAM : <span id="ramUsage">0%</span></p>
+        <section class="resource-section">
+            <h2>Utilisation des ressources</h2>
+            <div class="resource-info">
+                <div class="resource-card">
+                    <div class="resource-header">
+                        <i class="fas fa-microchip"></i> 
+                        <span>CPU</span>
+                        <div class="resource-value" id="cpuUsage">0%</div>
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="cpuChart"></canvas>
+                    </div>
+                </div>
+                <div class="resource-card">
+                    <div class="resource-header">
+                        <i class="fas fa-memory"></i> 
+                        <span>RAM</span>
+                        <div class="resource-value" id="ramUsage">0%</div>
+                    </div>
+                    <div class="chart-container">
+                        <canvas id="ramChart"></canvas>
+                    </div>
+                </div>
+            </div>
+        </section>
 
-    <h2>Gestion des fichiers</h2>
-    <input type="file" id="fileInput">
-    <button onclick="uploadFile()">Envoyer</button>
+        <section class="file-section">
+            <h2>Gestion des fichiers</h2>
+            <div class="file-upload">
+                <p><i class="fas fa-cloud-upload-alt"></i> Déposez un fichier ou cliquez pour sélectionner</p>
+                <input type="file" id="fileInput">
+                <button onclick="uploadFile()"><i class="fas fa-upload"></i> Envoyer</button>
+            </div>
+        </section>
+    </main>
 
+    <footer class="site-footer">
+        <p>&copy; 2023 MineServer - Fait avec <i class="fas fa-heart"></i> par l'équipe YNOV</p>
+    </footer>
+
+    <!-- Scripts -->
     <script src="/socket.io/socket.io.js"></script>
-    <script src="../Js/script.js"></script>
+    <script src="../Js/common/theme.js"></script>
+    <script src="../Js/common/navigation.js"></script>
+    <script src="../Js/pages/dashboard.js"></script>
 </body>
 </html>

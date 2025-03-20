@@ -1,0 +1,203 @@
+<!DOCTYPE html>
+<html lang="fr" data-theme="dark">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>MineServer - Présentation</title>
+    <!-- Styles communs -->
+    <link rel="stylesheet" href="../Css/common/base.css">
+    <link rel="stylesheet" href="../Css/common/components.css">
+    <!-- Styles spécifiques -->
+    <link rel="stylesheet" href="../Css/pages/presentation.css">
+    <!-- Icônes -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
+</head>
+<body>
+    <!-- Navigation -->
+    <div class="menu-toggle" id="menuToggle">
+        <i class="fas fa-bars"></i>
+    </div>
+    
+    <div class="theme-toggle" id="themeToggle">
+        <i class="fas fa-moon"></i>
+    </div>
+    
+    <div class="side-menu" id="sideMenu">
+        <div class="menu-header">
+            <h3>Menu</h3>
+            <div class="menu-close" id="menuClose"><i class="fas fa-times"></i></div>
+        </div>
+        <ul class="menu-items">
+            <li><a href="index.html"><i class="fas fa-home"></i> Accueil</a></li>
+            <li><a href="presentation.html" class="active"><i class="fas fa-info-circle"></i> À propos</a></li>
+            <li><a href="#features"><i class="fas fa-list-check"></i> Fonctionnalités</a></li>
+            <li><a href="#technology"><i class="fas fa-code"></i> Technologies</a></li>
+            <li><a href="#team"><i class="fas fa-users"></i> Équipe</a></li>
+            <li><a href="https://github.com/tisteba/Minecraft-Server-Monitoring" target="_blank"><i class="fab fa-github"></i> GitHub</a></li>
+        </ul>
+    </div>
+    
+    <div class="overlay" id="overlay"></div>
+
+    <!-- Contenu principal -->
+    <main>
+        <div class="presentation-container">
+            <header class="dashboard-header">
+                <div class="header-content">
+                    <div class="project-logo">
+                        <i class="fas fa-cube"></i>
+                    </div>
+                    <h1>MineServer</h1>
+                    <p class="project-tagline">Une solution complète pour gérer et surveiller votre serveur Minecraft</p>
+                </div>
+            </header>
+            
+            <div class="section" id="about">
+                <h2><i class="fas fa-info-circle"></i> À propos du projet</h2>
+                <p>Minecraft Server Monitoring est une application web permettant de surveiller et de gérer facilement votre serveur Minecraft depuis n'importe quel navigateur. Notre solution offre une interface moderne et intuitive qui vous donne un contrôle total sur votre serveur, tout en visualisant son état et ses performances en temps réel.</p>
+                
+                <p>Ce projet a été développé dans le cadre de notre formation à YNOV, avec pour objectif de créer un outil professionnel qui facilite la gestion de serveurs Minecraft pour les administrateurs de tous niveaux.</p>
+                
+                <div class="cta-container">
+                    <a href="https://github.com/tisteba/Minecraft-Server-Monitoring" class="github-link" target="_blank">
+                        <i class="fab fa-github"></i> Voir le projet sur GitHub
+                    </a>
+                </div>
+            </div>
+            
+            <div class="section" id="features">
+                <h2><i class="fas fa-list-check"></i> Fonctionnalités principales</h2>
+                <p>Notre application offre une large gamme de fonctionnalités pour répondre à tous vos besoins de gestion de serveur :</p>
+                
+                <div class="feature-list">
+                    <div class="feature-item">
+                        <i class="fas fa-terminal"></i>
+                        <div>
+                            <h3>Console en temps réel</h3>
+                            <p>Accédez à la console de votre serveur et envoyez des commandes directement depuis l'interface web.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="feature-item">
+                        <i class="fas fa-chart-line"></i>
+                        <div>
+                            <h3>Monitoring des ressources</h3>
+                            <p>Visualisez l'utilisation du CPU et de la RAM avec des graphiques dynamiques en temps réel.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="feature-item">
+                        <i class="fas fa-power-off"></i>
+                        <div>
+                            <h3>Contrôle du serveur</h3>
+                            <p>Démarrez, arrêtez ou redémarrez votre serveur en un seul clic depuis n'importe où.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="feature-item">
+                        <i class="fas fa-upload"></i>
+                        <div>
+                            <h3>Gestion des fichiers</h3>
+                            <p>Téléchargez facilement des plugins, des mods ou des mondes sur votre serveur.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="feature-item">
+                        <i class="fas fa-shield-alt"></i>
+                        <div>
+                            <h3>Sécurité avancée</h3>
+                            <p>Authentification sécurisée et protection contre les accès non autorisés.</p>
+                        </div>
+                    </div>
+                    
+                    <div class="feature-item">
+                        <i class="fas fa-mobile-alt"></i>
+                        <div>
+                            <h3>Design responsive</h3>
+                            <p>Interface adaptée à tous les appareils pour une gestion en déplacement.</p>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="section" id="technology">
+                <h2><i class="fas fa-code"></i> Technologies utilisées</h2>
+                <p>Notre application repose sur un stack technologique moderne et robuste :</p>
+                
+                <div class="tech-categories">
+                    <div class="tech-category">
+                        <h3><i class="fas fa-desktop"></i> Frontend</h3>
+                        <div class="tech-stack">
+                            <div class="tech-item"><i class="fab fa-html5"></i> HTML5</div>
+                            <div class="tech-item"><i class="fab fa-css3-alt"></i> CSS3</div>
+                            <div class="tech-item"><i class="fab fa-js"></i> JavaScript</div>
+                            <div class="tech-item"><i class="fas fa-chart-line"></i> Chart.js</div>
+                        </div>
+                    </div>
+                    
+                    <div class="tech-category">
+                        <h3><i class="fas fa-server"></i> Backend</h3>
+                        <div class="tech-stack">
+                            <div class="tech-item"><i class="fab fa-node-js"></i> Node.js</div>
+                            <div class="tech-item"><i class="fas fa-server"></i> Express</div>
+                            <div class="tech-item"><i class="fas fa-plug"></i> Socket.IO</div>
+                            <div class="tech-item"><i class="fas fa-database"></i> FS API</div>
+                        </div>
+                    </div>
+                    
+                    <div class="tech-category">
+                        <h3><i class="fas fa-terminal"></i> Script</h3>
+                        <div class="tech-stack">
+                            <div class="tech-item"><i class="fab fa-linux"></i> Bash</div>
+                            <div class="tech-item"><i class="fas fa-cogs"></i> Shell</div>
+                            <div class="tech-item"><i class="fas fa-shield-alt"></i> Firewall</div>
+                            <div class="tech-item"><i class="fas fa-lock"></i> SSL/TLS</div>
+                        </div>
+                    </div>
+                </div>
+                
+                <p class="architecture-note">L'application utilise une architecture client-serveur avec une API RESTful pour les opérations standards et des WebSockets pour les communications en temps réel comme la console et les métriques de ressources.</p>
+            </div>
+            
+            <div class="section" id="team">
+                <h2><i class="fas fa-users"></i> Notre équipe</h2>
+                <p>Ce projet a été développé par une équipe d'étudiants passionnés de l'école YNOV :</p>
+                
+                <div class="team-members">
+                    <div class="team-member">
+                        <div class="avatar">A</div>
+                        <h3>Anthony Goasdoué</h3>
+                        <p>Script, Back & Front</p>
+                    </div>
+                    
+                    <div class="team-member">
+                        <div class="avatar">B</div>
+                        <h3>Baptiste Renou</h3>
+                        <p>Script</p>
+                    </div>
+                    
+                    <div class="team-member">
+                        <div class="avatar">V</div>
+                        <h3>Vicenzzo Marciel Rigo</h3>
+                        <p>Sécurisation du serveur</p>
+                    </div>
+                </div>
+            </div>
+            
+            <div class="navigation-links">
+                <a href="/monitoring" class="github-link">
+                    <i class="fas fa-play"></i> Accéder à l'application
+                </a>
+            </div>
+        </div>
+    </main>
+
+    <footer class="site-footer">
+        <p>&copy; 2023 MineServer - Fait avec <i class="fas fa-heart"></i> par l'équipe YNOV</p>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="../Js/common/theme.js"></script>
+    <script src="../Js/common/navigation.js"></script>
+</body>
+</html>

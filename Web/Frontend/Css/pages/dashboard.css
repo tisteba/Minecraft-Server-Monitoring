@@ -1,0 +1,298 @@
+/* ==== STYLES SPÉCIFIQUES AU TABLEAU DE BORD ==== */
+
+/* Header et logo - Nouvelle structure */
+.dashboard-header {
+    text-align: center;
+    margin-bottom: 50px;
+    width: 100%;
+}
+
+.header-content {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    position: relative;
+    padding-bottom: 20px;
+}
+
+.header-content::after {
+    content: '';
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 120px;
+    height: 2px;
+    background-color: var(--primary-blue);
+}
+
+.project-logo {
+    font-size: 3.5rem;
+    margin-bottom: 10px;
+    color: var(--primary-blue);
+    text-shadow: 0 0 15px rgba(41, 98, 255, 0.5);
+}
+
+.header-content h1 {
+    font-size: 2.5rem;
+    margin: 10px 0;
+    color: var(--primary-blue);
+}
+
+.header-content h1::after {
+    display: none;
+}
+
+.status-container {
+    margin-top: 10px;
+}
+
+.main-title {
+    text-align: center;
+    width: 100%;
+    margin: 10px auto;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+}
+
+.main-title::after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60px;
+    height: 3px;
+    background: var(--primary-blue);
+}
+
+.title-with-status {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin: 10px 0;
+}
+
+.title-with-status h1 {
+    margin: 0;
+    margin-right: 15px;
+}
+
+.title-with-status h1::after {
+    display: none;
+}
+
+/* Terminal */
+.terminal-section {
+    margin: 30px auto;
+}
+
+#terminal-container {
+    width: 90%;
+    height: 350px;
+    background: var(--darker-bg);
+    color: var(--terminal-color);
+    overflow-y: scroll;
+    margin: 0 auto;
+    padding: 15px;
+    font-family: 'Consolas', 'Courier New', monospace;
+    border-radius: 6px;
+    border: 1px solid var(--primary-blue);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    text-align: left;
+    position: relative;
+}
+
+#terminal-container::before {
+    content: '';
+    position: absolute;
+    top: 5px;
+    left: 10px;
+    width: 12px;
+    height: 12px;
+    background-color: var(--error-red);
+    border-radius: 50%;
+    box-shadow: 20px 0 0 var(--warning-orange), 40px 0 0 var(--success-green);
+}
+
+#terminal-container::-webkit-scrollbar {
+    width: 8px;
+}
+
+#terminal-container::-webkit-scrollbar-track {
+    background: var(--darker-bg);
+}
+
+#terminal-container::-webkit-scrollbar-thumb {
+    background: var(--primary-blue);
+    border-radius: 4px;
+}
+
+/* Commandes */
+.command-section {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    margin: 30px auto;
+    max-width: 800px;
+    background: transparent;
+    border: none;
+    box-shadow: none;
+    border-radius: 10px;
+    padding: 20px;
+}
+
+.command-input {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin: 15px auto;
+    width: 100%;
+}
+
+.command-input input[type="text"] {
+    width: 70%;
+    margin-right: 10px;
+}
+
+.button-group {
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+    margin-top: 20px;
+    padding-top: 20px;
+    border-top: 1px solid rgba(100, 181, 246, 0.15);
+    width: 100%;
+}
+
+/* Ressources */
+.resource-section {
+    margin: 40px auto;
+}
+
+.resource-section h2 {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.resource-info {
+    display: flex;
+    justify-content: space-around;
+    margin: 20px 0;
+    gap: 30px;
+}
+
+.resource-card {
+    background: var(--card-bg);
+    border-radius: 6px;
+    padding: 20px;
+    width: 48%;
+    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
+    border-left: 3px solid var(--primary-blue);
+    transition: all 0.3s ease;
+    display: flex;
+    flex-direction: column;
+}
+
+.resource-card:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+}
+
+.resource-header {
+    display: flex;
+    align-items: center;
+    margin-bottom: 15px;
+}
+
+.resource-header i {
+    font-size: 1.5rem;
+    margin-right: 10px;
+    color: var(--accent-blue);
+}
+
+.resource-header span {
+    font-size: 1.2rem;
+    font-weight: 500;
+}
+
+.resource-value {
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: var(--primary-blue);
+    margin-left: auto;
+}
+
+.chart-container {
+    height: 120px;
+    margin: 15px 0;
+    position: relative;
+}
+
+/* Fichiers */
+.file-section {
+    margin: 40px auto;
+}
+
+.file-section h2 {
+    text-align: center;
+    margin-bottom: 30px;
+}
+
+.file-upload {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    background: var(--card-bg);
+    padding: 25px;
+    border-radius: 6px;
+    border: 1px dashed var(--accent-blue);
+    margin: 0 auto;
+    max-width: 600px;
+    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
+}
+
+.file-upload p {
+    margin-bottom: 20px;
+    text-align: center;
+}
+
+.file-upload i {
+    font-size: 1.5rem;
+    margin-right: 10px;
+    color: var(--accent-blue);
+}
+
+/* Responsive */
+@media (max-width: 768px) {
+    .resource-info {
+        flex-direction: column;
+    }
+    
+    .resource-card {
+        width: 100%;
+        margin-bottom: 15px;
+    }
+    
+    .command-input {
+        flex-direction: column;
+    }
+    
+    .command-input input[type="text"] {
+        width: 100%;
+        margin-right: 0;
+        margin-bottom: 10px;
+    }
+    
+    .button-group {
+        flex-direction: column;
+    }
+    
+    .button-group button {
+        width: 100%;
+        margin: 5px 0;
+    }
+}
