@@ -1,46 +1,43 @@
-// WebSocket pour recevoir les données de la console SSH et les statistiques
-const ws = new WebSocket('ws://localhost:8080');
+const socket = io();
 
-ws.onmessage = function(event) {
-  const data = JSON.parse(event.data);
-
-  if (data.type === "console") {
-    // Afficher les données de la console SSH
-    const sshConsole = document.getElementById('ssh-console');
-    sshConsole.innerText += data.data + '\n'; // Ajoute les nouvelles données à la console
-    sshConsole.scrollTop = sshConsole.scrollHeight; // Fait défiler vers le bas
-  } else if (data.type === "stats") {
-    // Mettre à jour les statistiques du serveur
-    document.getElementById('cpu-usage').innerText = data.data.cpu + '%';
-    document.getElementById('cpu-temp').innerText = data.data.temp;
-    document.getElementById('ram-usage').innerText = data.data.ram + '%';
-  }
-};
-
-// Envoi de commandes à la console via WebSocket
-document.getElementById('command-input').addEventListener('keydown', (event) => {
-  if (event.key === 'Enter') {
-    const command = event.target.value;
-    ws.send(command);
-    event.target.value = '';
-  }
+// Terminal interactif
+document.getElementById("command").addEventListener("keypress", (event) => {
+    if (event.key === "Enter") sendCommand();
 });
 
-// Boutons de contrôle
-document.getElementById('start-btn').addEventListener('click', () => {
-  fetch('/startserver')
-    .then(response => response.text())
-    .then(message => alert(message));
+function sendCommand() {
+    let command = document.getElementById("command").value;
+    socket.emit("terminalInput", command);
+    document.getElementById("command").value = "";
+}
+
+socket.on("terminalOutput", (data) => {
+    let terminal = document.getElementById("terminal-container");
+    terminal.innerHTML += `<div>${data}</div>`;
+    terminal.scrollTop = terminal.scrollHeight;
 });
 
-document.getElementById('stop-btn').addEventListener('click', () => {
-  fetch('/stopserver')
-    .then(response => response.text())
-    .then(message => alert(message));
-});
+// Contrôle du serveur
+function serverAction(action) {
+    socket.emit("serverControl", action);
+}
 
-document.getElementById('restart-btn').addEventListener('click', () => {
-  fetch('/restartserver')
-    .then(response => response.text())
-    .then(message => alert(message));
-});
+socket.on("serverMessage", (message) => alert(message));
+
+// Utilisation CPU/RAM
+socket.on("cpuUsage", (usage) => document.getElementById("cpuUsage").innerText = usage.toFixed(2) + "%");
+socket.on("ramUsage", (usage) => document.getElementById("ramUsage").innerText = usage.toFixed(2) + "%");
+
+// Gestion des fichiers
+function uploadFile() {
+    let file = document.getElementById("fileInput").files[0];
+    if (!file) return alert("Sélectionne un fichier");
+
+    let formData = new FormData();
+    formData.append("file", file);
+
+    fetch("/upload", { method: "POST", body: formData })
+        .then(response => response.text())
+        .then(data => alert(data))
+        .catch(error => console.error("Erreur:", error));
+}

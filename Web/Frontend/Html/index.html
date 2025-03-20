@@ -3,45 +3,30 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Contrôle Serveur Minecraft</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
-    <link rel="stylesheet" href="../css/static.css">
+    <title>Monitoring Minecraft</title>
+    <link rel="stylesheet" href="../Css/static.css">
 </head>
 <body>
-    <div class="container">
-        <div class="header">
-            <img src="https://www.minecraft.net/content/dam/minecraft/pack.png" alt="Minecraft Logo">
-            <h1>Contrôle du Serveur Minecraft</h1>
-        </div>
+    <h1>Monitoring Minecraft Server</h1>
 
-        <!-- Boutons de contrôle -->
-        <div class="controls">
-            <button id="start-btn"><i class="fas fa-play"></i> Démarrer</button>
-            <button id="stop-btn"><i class="fas fa-stop"></i> Arrêter</button>
-            <button id="restart-btn"><i class="fas fa-sync-alt"></i> Redémarrer</button>
-        </div>
+    <div id="terminal-container"></div>
+    <input type="text" id="command" placeholder="Entrez une commande...">
+    <button onclick="sendCommand()">Exécuter</button>
 
-        <!-- Console SSH -->
-        <div class="console">
-            <h2><i class="fas fa-terminal"></i> Console SSH</h2>
-            <pre id="ssh-console">Connexion SSH en cours...</pre>
-            <div class="command-wrapper">
-                <input type="text" id="command-input" placeholder="Entrez une commande..." />
-            </div>
-        </div>
-        
-        <div class="server-stats"></div>
-            <h2><i class="fas fa-chart-line"></i> Statistiques du Serveur</h2>
-            <div id="stats">
-                <p>CPU: <span id="cpu-usage">Chargement...</span></p>
-                <p>Température: <span id="cpu-temp">Chargement...</span></p>
-                <p>RAM: <span id="ram-usage">Chargement...</span></p>
-            </div>
-        <footer>
-            &copy; 2023 Minecraft Server Monitoring - Développé avec ❤️
-        </footer>
-    </div>
+    <h2>Contrôle du serveur</h2>
+    <button onclick="serverAction('start')">Démarrer</button>
+    <button onclick="serverAction('restart')">Redémarrer</button>
+    <button onclick="serverAction('stop')">Arrêter</button>
 
-    <script src="../js/script.js"></script>
+    <h2>Utilisation des ressources</h2>
+    <p>CPU : <span id="cpuUsage">0%</span></p>
+    <p>RAM : <span id="ramUsage">0%</span></p>
+
+    <h2>Gestion des fichiers</h2>
+    <input type="file" id="fileInput">
+    <button onclick="uploadFile()">Envoyer</button>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script src="../Js/script.js"></script>
 </body>
 </html>
