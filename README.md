@@ -1,82 +1,88 @@
-# Hébergement d'un serveur Minecraft Bedrock Edition avec gestion via une interface web
+# Minecraft Serveur avec Monitoring
 
-**Membres du groupe** : Vicenzzo Maciel Rigo, Anthony Goasdoué, Baptiste Renou
+## 📌 Introduction
+Ce projet vise à automatiser l'installation et le déploiement d'un serveur Minecraft Bedrock sur un serveur Ubuntu. Il comprend également une interface web permettant de surveiller les performances du serveur (RAM, CPU) et d'interagir avec lui via une invite de commande. Plusieurs scripts Bash ont été développés pour améliorer la gestion des logs et des sauvegardes du monde, ainsi que pour renforcer la sécurité d'accès au serveur.
 
-## Objectifs :
+## ✨ Fonctionnalités
+- **Déploiement automatique** du serveur Minecraft Bedrock via des scripts Bash
+- **Interface web** en HTML/CSS/JS avec un backend en JavaScript pour afficher l'utilisation des ressources et interagir avec le serveur
+- **Gestion avancée des logs**
+  - Un nouveau fichier de logs est créé à chaque démarrage du serveur
+  - Compression des logs après **7 jours**
+  - Suppression des logs après **30 jours**
+- **Sauvegarde automatique du monde**
+  - Une sauvegarde est effectuée **toutes les 3 heures**
+  - Un maximum de **5 sauvegardes** est conservé avant suppression
+- **Automatisation avec Cron** pour exécuter les scripts à intervalles réguliers
+- **Sécurisation de l'accès SSH**
+  - Accès uniquement via clés privées
+  - Désactivation de l'authentification SSH par mot de passe
+  - Seuls les membres du goupe de la personne ayant déployé le script peuvent accéder au serveur en tant qu'utilisateur `minecraft-serveur`
 
-**Hébergement du serveur Minecraft :**
+## 🛠 Installation
+### 📋 Prérequis
+- Un serveur sous **Ubuntu**
+- Une connexion SSH avec droits sudo
+- Clés SSH pour une connexion sécurisée
 
- - Installer et configurer un serveur Minecraft Bedrock Edition sur une VM avec Rocky Linux.
+### 🚀 Étapes d'installation
+1. Cloner ce dépôt sur votre serveur Ubuntu :
+   ```bash
+   git clone https://github.com/tisteba/Minecraft-Server-Monitoring.git
+   cd Minecraft-Server-Monitoring
+   ```
+2. Exécuter le script d'installation :
+   ```bash
+   chmod +x mineserver.sh
+   ./mineserver.sh
+   ```
+3. Suivre les instructions affichées pour finaliser l'installation.
 
-- Optimiser les performances du serveur.
+## 🎮 Utilisation
+### 🖥 Accéder au serveur Minecraft
+- Le serveur démarre automatiquement après installation
+- Pour le démarrer manuellement :
+  ```bash
+  ./startServer.sh
+  ```
 
-**Gestion via une interface web :**
+- Pour l'éteindre :
+  ```bash
+  stop
+  ```
+  (Dans l'invit de commande du serveur)
 
-Créer une interface web permettant de :
+### 🌐 Interface Web
+- Ouvrir un navigateur et accéder à :
+  ```
+  http://<IP_DU_SERVEUR>:<PORT>
+  ```
+- Affiche les performances du serveur
+- Permet d'exécuter des commandes sur le serveur Minecraft
 
-- Surveiller les performances du serveur (utilisation CPU, RAM, espace disque, etc.).
+## 🔒 Sécurité et Accès SSH
+- Connexion SSH uniquement via clés privées :
+  ```bash
+  ssh -i <chemin_de_votre_clé> user@<IP_DU_SERVEUR>
+  ```
+- Pour interagir avec Minecraft, basculer vers l'utilisateur applicatif :
+  ```bash
+  sudo su - minecraft-serveur
+  ```
 
-- Effectuer des actions administratives à distance, comme démarrer/arrêter le serveur, modifier le nombre de joueurs max, bannir des joueurs, etc.
+## ⏳ Automatisation avec Cron
+- **Logs** : Compression après **7 jours**, suppression après **30 jours**
+- **Sauvegardes** : Toutes les **3 heures**, conservation des **5 dernières**
+- Tâches planifiées visibles avec :
+  ```bash
+  crontab -l
+  ```
 
-**Monitoring et Maintenance :**
+## ⚙️ Détails techniques
+- **Backend** : JavaScript
+- **Frontend** : HTML/CSS/JS
+- **Scripts** : Bash
+- **Stockage des logs** : Fichier dédié dans les dossiers du serveur Minecraft
 
-- Mettre en place des outils de monitoring (ex : Grafana, Prometheus) pour suivre l'état du serveur.
-
-- Ajouter des fonctionnalités d'alertes (ex : notifications lorsque les performances sont faibles).
-
-
- **Amélioration et évolutivité :**
-
-Début avec une VM, puis envisager le passage à un serveur dédié si nécessaire, en fonction des performances et des besoins.
-
-
----
-
-Lien du git :
- https://github.com/tisteba/Minecraft-Server-Monitoring.git
-
-
-OS du serveur : Rocky linux
-
-
-🌟 Pourquoi Rocky Linux pour notre serveur Minecraft Bedrock ?
-1️⃣ Stabilité et Fiabilité 🏗️
-
-    Rocky Linux est conçu pour les serveurs en production : il offre une grande stabilité et des mises à jour bien contrôlées.
-
-    Contrairement à Ubuntu, il ne reçoit pas de mises à jour fréquentes qui pourraient casser des services.
-
-    Support à long terme (10 ans), ce qui évite d’avoir à changer d’OS régulièrement.
-
-2️⃣ Sécurité Renforcée 🔒
-
-    Rocky Linux bénéficie des meilleures pratiques en entreprise (inspiré de RHEL).
-    Les mises à jour de sécurité sont régulières et bien testées, ce qui réduit les risques d’instabilité.
-
-    Par défaut, il inclut SELinux, un système avancé de protection contre les attaques.
-
-    Meilleure gestion des accès et des rôles, parfait pour sécuriser notre serveur de jeu et éviter les intrusions.
-
-3️⃣ Performance et Optimisation ⚡
-
-    Utilisation minimale des ressources (moins de consommation mémoire que Ubuntu Server).
-
-    Idéal pour un serveur dédié, car il optimise les performances réseau et disque.
-
-    Gestion avancée des services et processus, permettant une meilleure répartition des ressources (CPU, RAM).
-
-4️⃣ Gestion des Paquets et Maintenance 🛠️
-
-    Utilisation de dnf, un gestionnaire de paquets plus sécurisé et fiable que apt.
-
-    Mises à jour transactionnelles : si une mise à jour échoue, on peut facilement la revenir en arrière sans casser le système.
-
-    Moins de maintenance requise qu’Ubuntu : on installe, on configure, et on est tranquille !
-
-5️⃣ Adaptabilité à Notre Projet 🎮
-
-    Parfait pour héberger un serveur Minecraft Bedrock, avec meilleure stabilité réseau et gestion avancée des logs.
-
-    Compatible avec nos besoins de monitoring via des outils comme Grafana, Prometheus et Cockpit.
-    
-    Permet de contrôler notre serveur depuis une interface web pour démarrer/arrêter le serveur, gérer les joueurs et modifier les configs.
+## 🤝 Auteurs et Crédits
+- Projet réalisé par: **Vicenzzo Maciel Rigo, Anthony Goasdoué, Baptiste Renou**
