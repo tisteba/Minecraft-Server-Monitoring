@@ -182,7 +182,7 @@ checkMinecraftStatus() {
 # Fonction pour démarrer le serveur
 start_server() {
     echo -e "${GREEN}Démarrage du serveur Minecraft...${NC}"
-    SERVER_DIR="/home/serveur-minecraft/MinecraftServer"  
+    SERVER_DIR="/home/serveur-minecraft/MinecraftServer/bedrock_server"  
     LOG_DIR="$SERVER_DIR/logs"
     TIMESTAMP=$(date +"%Y-%m-%d_%H-%M-%S")
     LOG_FILE="$LOG_DIR/mcbedrock_$TIMESTAMP.log"
