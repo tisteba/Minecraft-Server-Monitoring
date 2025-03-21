@@ -179,10 +179,9 @@ checkMinecraftStatus() {
     fi
 }
 
-# Fonction pour démarrer le serveur
 start_server() {
     echo -e "${GREEN}Démarrage du serveur Minecraft...${NC}"
-    SERVER_DIR="/home/serveur-minecraft/MinecraftServer/bedrock_server"  
+    SERVER_DIR="/home/serveur-minecraft/Minecraft-Server-Monitoring/bedrock-server/"  
     LOG_DIR="$SERVER_DIR/logs"
     TIMESTAMP=$(date +"%Y-%m-%d_%H-%M-%S")
     LOG_FILE="$LOG_DIR/mcbedrock_$TIMESTAMP.log"
@@ -192,7 +191,13 @@ start_server() {
     mkdir -p "$LOG_DIR"
 
     cd "$SERVER_DIR" || exit
-    ./bedrock_server 2>&1 | tee -a "$LOG_FILE"
+
+    if [ -f "./bedrock_server" ]; then
+        ./bedrock_server 2>&1 | tee -a "$LOG_FILE"
+    else
+        echo -e "${RED}Erreur: Le fichier bedrock_server est introuvable dans $SERVER_DIR${NC}"
+        exit 1
+    fi
 
     find "$LOG_DIR" -name "mcbedrock_*.log" -type f -mtime +$ARCHIVE_DAYS -exec tar -rvf "$ARCHIVE_FILE" {} \; -exec rm {} \;
 
