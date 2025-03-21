@@ -72,13 +72,40 @@ Par défaut, l'interface web utilise le port **8080**. Pour modifier ce port :
 ### Structure du projet
 Voici la structure du répertoire du projet :
 ```
-Minecraft-Server-Monitoring/
-├── bedrock-server/        # Fichiers du serveur Minecraft
-├── mineserver.sh          # Script principal d'installation
-├── scripts/               # Scripts d'automatisation
-├── Web/                   # Application Web
-│   ├── Backend/           # Serveur Node.js
-│   └── Frontend/          # Interface utilisateur
+MineServer 
+├─ .gitignore
+├─ README.md
+├─ Web
+│  ├─ Backend
+│  │  └─ server.js
+│  └─ Frontend
+│     ├─ Css
+│     │  ├─ common
+│     │  │  ├─ base.css
+│     │  │  └─ components.css
+│     │  └─ pages
+│     │     ├─ dashboard.css
+│     │     └─ presentation.css
+│     ├─ Html
+│     │  ├─ index.html
+│     │  └─ presentation.html
+│     └─ Js
+│        ├─ common
+│        │  ├─ navigation.js
+│        │  └─ theme.js
+│        └─ pages
+│           └─ dashboard.js
+├─ bedrock-server-1.21.62.01.zip
+├─ mineserver.sh
+├─ package-lock.json
+├─ package.json
+└─ scripts
+   ├─ backupScript.sh
+   ├─ configuration.sh
+   ├─ server.properties
+   ├─ serverInstall.sh
+   ├─ startServer.sh
+   └─ test.sh
 ```
 
 ---
