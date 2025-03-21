@@ -27,8 +27,7 @@ const sshConfig = {
     host: "wilfart.fr",
     port: 2010,
     username: "serveur-minecraft",
-    privateKey: fs.readFileSync("C:/Users/amgoa/.ssh/id_rsa_MineServ"),
-    // Options simplifiées pour éviter les erreurs
+    privateKey: fs.readFileSync(path.resolve(process.env.HOME || process.env.USERPROFILE, ".ssh/id_rsa_MineServ")),
     readyTimeout: 30000,
     keepaliveInterval: 30000,
     keepaliveCountMax: 5
@@ -491,7 +490,8 @@ function parseHumanReadableToBytes(sizeStr) {
 app.post("/upload", (req, res) => {
     if (!req.files) return res.status(400).send("Aucun fichier");
     let file = req.files.file;
-    file.mv(`../Minecraft-Server-Monitoring/${file.name}`, (err) => {
+    const uploadPath = path.join(__dirname, "../../", file.name);
+    file.mv(uploadPath, (err) => {
         if (err) return res.status(500).send(err);
         res.send("Fichier envoyé");
     });
