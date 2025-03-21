@@ -1,9 +1,17 @@
 /* ==== STYLES SPÉCIFIQUES AU TABLEAU DE BORD ==== */
 
-/* Header et logo - Nouvelle structure */
+/* Structure de base du tableau de bord */
+.dashboard-container {
+    display: flex;
+    flex-direction: column;
+    max-width: 1400px;
+    margin: 0 auto;
+}
+
+/* Header et logo */
 .dashboard-header {
     text-align: center;
-    margin-bottom: 50px;
+    margin-bottom: 30px;
     width: 100%;
 }
 
@@ -43,32 +51,6 @@
     display: none;
 }
 
-.status-container {
-    margin-top: 10px;
-}
-
-.main-title {
-    text-align: center;
-    width: 100%;
-    margin: 10px auto;
-    font-weight: 600;
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    position: relative;
-}
-
-.main-title::after {
-    content: '';
-    position: absolute;
-    bottom: -10px;
-    left: 50%;
-    transform: translateX(-50%);
-    width: 60px;
-    height: 3px;
-    background: var(--primary-blue);
-}
-
 .title-with-status {
     display: flex;
     align-items: center;
@@ -81,137 +63,231 @@
     margin-right: 15px;
 }
 
-.title-with-status h1::after {
-    display: none;
+/* Grille du tableau de bord */
+.dashboard-grid {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 25px;
+    margin-bottom: 40px;
+}
+
+.dashboard-column {
+    display: flex;
+    flex-direction: column;
+    gap: 25px;
+}
+
+.terminal-column {
+    grid-column: 1;
+}
+
+.metrics-column {
+    grid-column: 2;
+}
+
+/* Carte de tableau de bord */
+.dashboard-card {
+    background: var(--card-bg);
+    border-radius: 10px;
+    overflow: hidden;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+}
+
+.dashboard-card:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 8px 25px rgba(0, 0, 0, 0.15);
+}
+
+.card-header {
+    background: rgba(30, 136, 229, 0.1);
+    padding: 15px 20px;
+    border-bottom: 1px solid rgba(100, 181, 246, 0.2);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.card-header h2 {
+    margin: 0;
+    font-size: 1.5rem;
+    display: flex;
+    align-items: center;
+    color: var(--primary-blue);
+    border-bottom: none;
+    padding-bottom: 0;
+}
+
+.card-header h2 i {
+    margin-right: 10px;
+    font-size: 1.2rem;
 }
 
 /* Terminal */
 .terminal-section {
-    margin: 30px auto;
+    padding: 20px;
+    padding-bottom: 10px;
+    flex: 1;
+    display: flex;
+    flex-direction: column;
 }
 
 #terminal-container {
-    width: 90%;
-    height: 350px;
+    width: 100%;
+    height: 300px;
     background: var(--darker-bg);
     color: var(--terminal-color);
-    overflow-y: scroll;
     margin: 0 auto;
-    padding: 15px;
+    padding: 0;
     font-family: 'Consolas', 'Courier New', monospace;
     border-radius: 6px;
     border: 1px solid var(--primary-blue);
     box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-    text-align: left;
     position: relative;
+    overflow: hidden;
 }
 
-#terminal-container::before {
-    content: '';
-    position: absolute;
-    top: 5px;
-    left: 10px;
-    width: 12px;
-    height: 12px;
-    background-color: var(--error-red);
-    border-radius: 50%;
-    box-shadow: 20px 0 0 var(--warning-orange), 40px 0 0 var(--success-green);
+/* Assurer que le terminal prend toute la hauteur disponible */
+.terminal-section .xterm {
+    height: 100%;
+    width: 100%;
 }
 
-#terminal-container::-webkit-scrollbar {
-    width: 8px;
+/* Styles supplémentaires pour améliorer le conteneur Xterm.js */
+.terminal-section .xterm-viewport,
+.terminal-section .xterm-screen {
+    width: 100% !important;
 }
 
-#terminal-container::-webkit-scrollbar-track {
-    background: var(--darker-bg);
-}
-
-#terminal-container::-webkit-scrollbar-thumb {
-    background: var(--primary-blue);
-    border-radius: 4px;
-}
-
-/* Commandes */
-.command-section {
+#reconnect-container {
     display: flex;
-    flex-direction: column;
-    align-items: center;
-    margin: 30px auto;
-    max-width: 800px;
-    background: transparent;
+    justify-content: center;
+    padding: 10px 0;
+}
+
+/* Bouton de reconnexion */
+#reconnect-button {
+    background-color: var(--primary-blue);
+    color: white;
     border: none;
-    box-shadow: none;
-    border-radius: 10px;
-    padding: 20px;
-}
-
-.command-input {
+    padding: 8px 16px;
+    border-radius: 4px;
+    cursor: pointer;
     display: flex;
-    justify-content: center;
     align-items: center;
-    margin: 15px auto;
-    width: 100%;
+    justify-content: center;
+    transition: all 0.3s ease;
+    margin-top: 5px;
 }
 
-.command-input input[type="text"] {
-    width: 70%;
-    margin-right: 10px;
+#reconnect-button i {
+    margin-right: 8px;
 }
 
-.button-group {
+#reconnect-button:hover {
+    background-color: var(--dark-blue);
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.2);
+}
+
+/* Suppression des 3 ronds colorés */
+#terminal-container::before {
+    display: none;
+}
+
+#reconnect-container {
     display: flex;
     justify-content: center;
-    flex-wrap: wrap;
-    margin-top: 20px;
-    padding-top: 20px;
-    border-top: 1px solid rgba(100, 181, 246, 0.15);
-    width: 100%;
+    padding: 10px 20px;
+}
+
+/* Boutons de contrôle du serveur - Positionnés sous le terminal */
+.server-controls {
+    display: flex;
+    justify-content: space-around;
+    padding: 5px 20px 5px;
+    background: rgba(30, 136, 229, 0.05);
+    border-top: none;
+    margin-top: 0;
+}
+
+.success-button {
+    background: var(--success-green);
+}
+
+.success-button:hover {
+    background: #388e3c;
+}
+
+.warning-button {
+    background: var(--warning-orange);
+}
+
+.warning-button:hover {
+    background: #f57c00;
+}
+
+.danger-button {
+    background: var(--error-red);
+}
+
+.danger-button:hover {
+    background: #d32f2f;
 }
 
 /* Ressources */
-.resource-section {
-    margin: 40px auto;
-}
-
-.resource-section h2 {
-    text-align: center;
-    margin-bottom: 30px;
-}
-
 .resource-info {
     display: flex;
-    justify-content: space-around;
-    margin: 20px 0;
+    flex-direction: column;
     gap: 30px;
+    padding: 20px;
 }
 
 .resource-card {
-    background: var(--card-bg);
-    border-radius: 6px;
-    padding: 20px;
-    width: 48%;
-    box-shadow: 0 3px 8px rgba(0, 0, 0, 0.1);
-    border-left: 3px solid var(--primary-blue);
+    background: rgba(30, 136, 229, 0.05);
+    border-radius: 8px;
+    padding: 15px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    border-left: 4px solid var(--primary-blue);
     transition: all 0.3s ease;
     display: flex;
     flex-direction: column;
 }
 
+/* Style spécifique pour la carte CPU */
+.resource-card:first-child {
+    min-height: 250px;
+    margin-bottom: 20px;
+}
+
+/* Style spécifique pour la carte RAM */
+.resource-card:nth-child(2) {
+    min-height: 320px;
+}
+
 .resource-card:hover {
     transform: translateY(-3px);
-    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.15);
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+    background: rgba(30, 136, 229, 0.1);
 }
 
 .resource-header {
     display: flex;
     align-items: center;
     margin-bottom: 15px;
+    padding-bottom: 10px;
+    border-bottom: 1px solid rgba(30, 136, 229, 0.2);
 }
 
 .resource-header i {
     font-size: 1.5rem;
     margin-right: 10px;
     color: var(--accent-blue);
+    background: rgba(30, 136, 229, 0.1);
+    padding: 8px;
+    border-radius: 50%;
 }
 
 .resource-header span {
@@ -224,35 +300,117 @@
     font-weight: bold;
     color: var(--primary-blue);
     margin-left: auto;
+    padding: 5px 10px;
+    background: rgba(30, 136, 229, 0.05);
+    border-radius: 4px;
 }
 
 .chart-container {
-    height: 120px;
-    margin: 15px 0;
+    height: 220px;
+    margin: 10px 0;
+    position: relative;
+    flex-grow: 1;
+    width: 100%;
+    overflow: visible;
+}
+
+.chart-container canvas {
+    border-radius: 6px;
+    background: rgba(0, 0, 0, 0.05);
+    padding: 10px;
+    box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Conteneur de graphique spécifique pour CPU */
+.resource-card:first-child .chart-container {
+    height: 180px;
+}
+
+/* Conteneur de graphique spécifique pour RAM */
+.resource-card:nth-child(2) .chart-container {
+    height: 240px;
+}
+
+/* Statistiques réseau et disque */
+.network-stats-card {
+    margin-top: 15px;
+}
+
+.network-stats-card .chart-container {
+    height: 200px;
+}
+
+.disk-usage-container {
+    margin-top: 15px;
+    width: 100%;
+    height: 25px;
+    background: rgba(0, 0, 0, 0.1);
+    border-radius: 4px;
+    overflow: hidden;
     position: relative;
 }
 
-/* Fichiers */
-.file-section {
-    margin: 40px auto;
+.disk-usage-bar {
+    height: 100%;
+    background: linear-gradient(90deg, var(--primary-blue) 0%, var(--accent-blue) 100%);
+    border-radius: 4px;
+    transition: width 0.3s ease;
 }
 
-.file-section h2 {
+.disk-usage-text {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: white;
+    font-size: 0.85rem;
+    font-weight: 500;
+    text-shadow: 0 0 2px rgba(0, 0, 0, 0.5);
+}
+
+.server-info {
+    background: rgba(30, 136, 229, 0.05);
+    padding: 12px;
+    border-radius: 6px;
+    margin-top: 15px;
+}
+
+.server-info-item {
+    display: flex;
+    justify-content: space-between;
+    padding: 8px 0;
+    border-bottom: 1px solid rgba(100, 181, 246, 0.1);
+}
+
+.server-info-item:last-child {
+    border-bottom: none;
+}
+
+.server-info-label {
+    font-weight: 500;
+    display: flex;
+    align-items: center;
+}
+
+.server-info-label i {
+    margin-right: 8px;
+    color: var(--accent-blue);
+    width: 20px;
     text-align: center;
-    margin-bottom: 30px;
 }
 
+.server-info-value {
+    font-weight: 600;
+    color: var(--primary-blue);
+}
+
+/* Fichiers */
 .file-upload {
     display: flex;
     flex-direction: column;
     align-items: center;
-    background: var(--card-bg);
     padding: 25px;
-    border-radius: 6px;
-    border: 1px dashed var(--accent-blue);
     margin: 0 auto;
-    max-width: 600px;
-    box-shadow: 0 3px 10px rgba(0, 0, 0, 0.1);
 }
 
 .file-upload p {
@@ -266,7 +424,69 @@
     color: var(--accent-blue);
 }
 
+/* Styles spécifiques pour les conteneurs de graphiques CPU et RAM */
+#cpuChart, #ramChart, #networkChart {
+    max-height: none !important;
+    width: 100% !important;
+    height: 100% !important;
+    display: block !important;
+}
+
+/* Cartes pour les métriques dans la colonne de droite */
+.metrics-column .dashboard-card {
+    height: auto;
+    margin-bottom: 15px;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Ajustement pour la carte des métriques système */
+.metrics-column .dashboard-card:first-child {
+    flex-grow: 1;
+    min-height: 700px;
+}
+
+/* Styles spécifiques pour la carte des métriques système */
+.metrics-system-card {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
+
+.metrics-system-card .resource-info {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+}
+
 /* Responsive */
+@media (max-width: 1024px) {
+    .dashboard-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .terminal-column, .metrics-column {
+        grid-column: 1;
+    }
+    
+    #terminal-container {
+        height: 250px;
+    }
+    
+    .resource-card,
+    .resource-card:first-child,
+    .resource-card:nth-child(2) {
+        min-height: 300px;
+    }
+    
+    .chart-container,
+    .resource-card:first-child .chart-container,
+    .resource-card:nth-child(2) .chart-container {
+        height: 200px;
+    }
+}
+
 @media (max-width: 768px) {
     .resource-info {
         flex-direction: column;
@@ -274,24 +494,14 @@
     
     .resource-card {
         width: 100%;
-        margin-bottom: 15px;
     }
     
-    .command-input {
+    .server-controls {
         flex-direction: column;
+        align-items: center;
     }
     
-    .command-input input[type="text"] {
-        width: 100%;
-        margin-right: 0;
-        margin-bottom: 10px;
-    }
-    
-    .button-group {
-        flex-direction: column;
-    }
-    
-    .button-group button {
+    .server-controls button {
         width: 100%;
         margin: 5px 0;
     }

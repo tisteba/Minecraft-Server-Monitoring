@@ -190,7 +190,7 @@ body.menu-open {
     display: inline-block;
     padding: 5px 15px;
     border-radius: 4px;
-    margin-left: 15px;
+    margin-left: 10px; /* Réduit la marge à gauche */
     font-size: 0.9rem;
     font-weight: 500;
     box-shadow: 0 1px 3px rgba(0, 0, 0, 0.2);
@@ -204,6 +204,55 @@ body.menu-open {
 .status-offline {
     background: var(--error-red);
     color: white;
+}
+
+.status-pending {
+    background: var(--warning-orange);
+    color: white;
+    animation: pulse 1.5s infinite;
+}
+
+@keyframes pulse {
+    0% {
+        opacity: 1;
+    }
+    50% {
+        opacity: 0.6;
+    }
+    100% {
+        opacity: 1;
+    }
+}
+
+/* Upload status */
+.upload-status {
+    margin-top: 15px;
+    padding: 10px 15px;
+    border-radius: 4px;
+    background: rgba(30, 136, 229, 0.1);
+    text-align: center;
+    animation: fadeIn 0.3s ease;
+}
+
+.upload-status.success {
+    background: rgba(76, 175, 80, 0.1);
+    color: var(--success-green);
+}
+
+.upload-status.error {
+    background: rgba(244, 67, 54, 0.1);
+    color: var(--error-red);
+}
+
+@keyframes fadeIn {
+    from {
+        opacity: 0;
+        transform: translateY(-10px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
 }
 
 /* Responsive */
