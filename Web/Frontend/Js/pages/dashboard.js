@@ -9,30 +9,26 @@ if (!window.socket) {
         reconnectionAttempts: 10,
         reconnectionDelay: 1000,
         timeout: 30000,
-        transports: ['websocket'], // Force WebSocket uniquement pour éviter l'erreur xhr poll
+        transports: ['websocket'],
         forceNew: true
     });
 }
 
 // Initialisation globale
 document.addEventListener('DOMContentLoaded', function() {
-    // Initialisation des graphiques
     if (document.getElementById('cpuChart') && document.getElementById('ramChart')) {
         initializeCharts();
     }
     
-    // Initialiser le graphique réseau
     if (document.getElementById('networkChart')) {
         initializeNetworkChart();
     }
 
-    // Debug - vérification de connexion
     window.socket.on("connect", () => {
         console.log("Socket connected:", window.socket.connected);
         console.log("Socket ID:", window.socket.id);
     });
 
-    // Debug - affichage des erreurs
     window.socket.on("connect_error", (err) => {
         console.error("Socket connection error:", err);
     });
@@ -40,9 +36,7 @@ document.addEventListener('DOMContentLoaded', function() {
 
 // ==== SURVEILLANCE DES RESSOURCES ====
 
-/**
- * Utilisation CPU en temps réel
- */
+// Utilisation CPU en temps réel
 window.socket.on("cpuUsage", (usage) => {
     console.log("CPU Usage received:", usage);
     const cpuValue = parseFloat(usage).toFixed(2);
@@ -51,15 +45,12 @@ window.socket.on("cpuUsage", (usage) => {
         cpuElement.innerText = cpuValue + "%";
     }
     
-    // Met à jour le graphique si disponible
     if (window.cpuData && window.cpuChart) {
         updateChartData(window.cpuData, window.cpuChart, cpuValue);
     }
 });
 
-/**
- * Utilisation RAM en temps réel
- */
+// Utilisation RAM en temps réel
 window.socket.on("ramUsage", (usage) => {
     console.log("RAM Usage received:", usage);
     const ramValue = parseFloat(usage).toFixed(2);
@@ -68,15 +59,12 @@ window.socket.on("ramUsage", (usage) => {
         ramElement.innerText = ramValue + "%";
     }
     
-    // Met à jour le graphique si disponible
     if (window.ramData && window.ramChart) {
         updateChartData(window.ramData, window.ramChart, ramValue);
     }
 });
 
-/**
- * Informations sur l'espace disque
- */
+// Informations sur l'espace disque
 window.socket.on("diskInfo", (diskInfo) => {
     console.log("Disk info received:", diskInfo);
     const diskUsageBar = document.getElementById("diskUsageBar");
@@ -92,7 +80,6 @@ window.socket.on("diskInfo", (diskInfo) => {
         diskUsagePercent.textContent = usedPercent + "%";
         diskUsageText.textContent = `${used} / ${total}`;
         
-        // Changer la couleur en fonction de l'utilisation
         if (usedPercent > 90) {
             diskUsageBar.style.background = "linear-gradient(90deg, var(--error-red) 0%, #ff7676 100%)";
         } else if (usedPercent > 70) {
@@ -103,9 +90,7 @@ window.socket.on("diskInfo", (diskInfo) => {
     }
 });
 
-/**
- * Informations générales du serveur
- */
+// Informations générales du serveur
 window.socket.on("serverInfo", (info) => {
     console.log("Server info received:", info);
     const serverIPElement = document.getElementById("serverIP");
@@ -117,7 +102,6 @@ window.socket.on("serverInfo", (info) => {
     }
     
     if (serverUptimeElement) {
-        // Formatter l'uptime correctement si c'est une chaîne
         if (typeof info.uptime === 'string') {
             serverUptimeElement.textContent = info.uptime;
         } else {
@@ -130,9 +114,7 @@ window.socket.on("serverInfo", (info) => {
     }
 });
 
-/**
- * Statistiques réseau en temps réel
- */
+// Statistiques réseau en temps réel
 window.socket.on("networkStats", (stats) => {
     console.log("Network stats received:", stats);
     if (window.networkChart) {
@@ -140,12 +122,9 @@ window.socket.on("networkStats", (stats) => {
     }
 });
 
-/**
- * Contrôle du serveur (démarrer, arrêter, redémarrer)
- */
+// Contrôle du serveur (démarrer, arrêter, redémarrer)
 function serverAction(action) {
     console.log("Server action requested:", action);
-    // Afficher un message de chargement
     const statusElement = document.getElementById('serverStatus');
     if (statusElement) {
         statusElement.className = 'server-status status-pending';
@@ -155,9 +134,7 @@ function serverAction(action) {
     window.socket.emit("serverControl", action);
 }
 
-/**
- * Initialisation des graphiques
- */
+// Initialisation des graphiques
 function initializeCharts() {
     const cpuChartCtx = document.getElementById('cpuChart');
     const ramChartCtx = document.getElementById('ramChart');
@@ -167,14 +144,11 @@ function initializeCharts() {
         return;
     }
     
-    // S'assurer que les dimensions des canvas sont correctes
     setCanvasDimensions(cpuChartCtx);
     setCanvasDimensions(ramChartCtx);
     
-    // Obtenir les couleurs basées sur le thème actuel
     const theme = document.documentElement.getAttribute('data-theme') || 'dark';
     
-    // Configuration commune des graphiques
     const chartConfig = {
         type: 'line',
         data: {
@@ -270,7 +244,6 @@ function initializeCharts() {
         }
     };
     
-    // Configuration CPU
     const cpuConfig = JSON.parse(JSON.stringify(chartConfig));
     cpuConfig.data.datasets = [{
         label: 'Utilisation CPU',
@@ -280,7 +253,6 @@ function initializeCharts() {
         pointBackgroundColor: '#1e88e5'
     }];
     
-    // Configuration RAM
     const ramConfig = JSON.parse(JSON.stringify(chartConfig));
     ramConfig.data.datasets = [{
         label: 'Utilisation RAM',
@@ -290,39 +262,30 @@ function initializeCharts() {
         pointBackgroundColor: '#8e24aa'
     }];
     
-    // Création des graphiques
     window.cpuChart = new Chart(cpuChartCtx, cpuConfig);
     window.ramChart = new Chart(ramChartCtx, ramConfig);
     
-    // Initialisation des données
     window.cpuData = Array(10).fill(0);
     window.ramData = Array(10).fill(0);
     
-    // Force resize charts après un délai
     setTimeout(() => {
         if (window.cpuChart) window.cpuChart.resize();
         if (window.ramChart) window.ramChart.resize();
         console.log("Charts resized for proper display");
     }, 500);
     
-    // Démarrer la simulation
     startSimulation();
 }
 
-/**
- * Helper function to ensure canvas dimensions are set correctly
- */
+// Configuration canvas pour les graphiques
 function setCanvasDimensions(canvas) {
     if (!canvas) return;
     
-    // Set display style
     canvas.style.width = '100%';
     canvas.style.height = '100%';
     
-    // Clear any inline max-height that might be interfering
     canvas.style.maxHeight = 'none';
     
-    // Set the parent container to be visible with a minimum height
     const container = canvas.parentElement;
     if (container) {
         container.style.minHeight = '300px';
@@ -330,21 +293,18 @@ function setCanvasDimensions(canvas) {
         container.style.overflow = 'visible';
     }
     
-    // Log the canvas dimensions for debugging
     console.log(`Canvas ${canvas.id} dimensions set - Width: ${canvas.width}, Height: ${canvas.height}`);
 }
 
-// Add a window resize handler to adjust charts when window size changes
+// Redimensionnement des graphiques lors du changement de taille de fenêtre
 window.addEventListener('resize', () => {
     if (window.cpuChart) window.cpuChart.resize();
-    if (window.ramChart) window.ramChart.resize(); // Correction: c'était window.cpuChart.resize()
+    if (window.ramChart) window.ramChart.resize();
     if (window.networkChart) window.networkChart.resize();
     console.log("Charts resized due to window resize");
 });
 
-/**
- * Initialisation du graphique réseau fusionné
- */
+// Initialisation du graphique réseau
 function initializeNetworkChart() {
     const networkChartCtx = document.getElementById('networkChart');
     if (!networkChartCtx) {
@@ -352,7 +312,6 @@ function initializeNetworkChart() {
         return;
     }
     
-    // Configuration du graphique
     const chartConfig = {
         type: 'line',
         data: {
@@ -385,7 +344,7 @@ function initializeNetworkChart() {
         options: {
             responsive: true,
             maintainAspectRatio: false,
-            animation: false, // Désactiver l'animation pour un rendu plus fluide
+            animation: false,
             plugins: {
                 legend: {
                     display: true,
@@ -417,51 +376,40 @@ function initializeNetworkChart() {
         }
     };
     
-    // Création du graphique
     window.networkChart = new Chart(networkChartCtx, chartConfig);
     window.networkInData = Array(10).fill(0);
     window.networkOutData = Array(10).fill(0);
     console.log("Network chart initialized");
 }
 
-/**
- * Mise à jour des données du graphique réseau
- */
+// Mise à jour des données du graphique réseau
 function updateNetworkChart(chart, incoming, outgoing) {
     if (!chart || !chart.data) {
         console.error("Network chart not properly initialized");
         return;
     }
     
-    // Déplacement fiable des données - ajouter à droite, supprimer à gauche
     chart.data.datasets[0].data.push(incoming);
     chart.data.datasets[0].data.shift();
     chart.data.datasets[1].data.push(outgoing);
     chart.data.datasets[1].data.shift();
     
-    // Mise à jour sans animation
     chart.update('none');
 }
 
-/**
- * Démarrer la simulation des données de ressources
- */
+// Démarrer la simulation des données
 function startSimulation() {
-    // Vérifier si nous avons déjà des mises à jour en temps réel
     const cpuValue = document.getElementById('cpuUsage').textContent;
     const ramValue = document.getElementById('ramUsage').textContent;
     
-    // Si les valeurs sont toujours à 0%, démarrer la simulation
     if (cpuValue === "0%" && ramValue === "0%") {
         let simulationCount = 0;
         const simulationTimeout = simulateResourceData();
         
-        // Arrêter la simulation après un certain temps ou si des données réelles arrivent
         const checkRealData = setInterval(() => {
             simulationCount++;
             const cpuCurrent = document.getElementById('cpuUsage').textContent;
             
-            // Si nous recevons des données réelles ou après 10 tentatives, arrêter la simulation
             if ((cpuCurrent !== "0%" && !cpuCurrent.includes('undefined')) || simulationCount > 10) {
                 clearTimeout(simulationTimeout);
                 clearInterval(checkRealData);
@@ -471,70 +419,32 @@ function startSimulation() {
     }
 }
 
-/**
- * Simuler les données de ressources pour la démo
- */
+// Simuler les données de ressources
 function simulateResourceData() {
-    // Simuler de nouvelles valeurs
-    const newCpuValue = Math.floor(Math.random() * 30) + 20; // Entre 20-50%
-    const newRamValue = Math.floor(Math.random() * 40) + 30; // Entre 30-70%
+    const newCpuValue = Math.floor(Math.random() * 30) + 20;
+    const newRamValue = Math.floor(Math.random() * 40) + 30;
     
-    // Mettre à jour les graphiques
     updateChartData(window.cpuData, window.cpuChart, newCpuValue);
     updateChartData(window.ramData, window.ramChart, newRamValue);
     
-    // Mettre à jour les textes
     const cpuElement = document.getElementById('cpuUsage');
     const ramElement = document.getElementById('ramUsage');
     
     if (cpuElement) cpuElement.textContent = `${newCpuValue}%`;
     if (ramElement) ramElement.textContent = `${newRamValue}%`;
     
-    // Appeler cette fonction à nouveau après un délai
     return setTimeout(simulateResourceData, 3000);
 }
 
-/**
- * Simuler des données réseau pour la démo
- */
-function simulateNetworkData() {
-    if (!window.networkInData || !window.networkOutData) return;
-    
-    const inValue = Math.floor(Math.random() * 500) + 50; // Entre 50KB et 550KB
-    const outValue = Math.floor(Math.random() * 200) + 30; // Entre 30KB et 230KB
-    
-    const networkInElement = document.getElementById("networkIn");
-    const networkOutElement = document.getElementById("networkOut");
-    
-    // Mettre à jour les graphiques
-    if (window.networkInChart && window.networkInData) {
-        updateChartData(window.networkInData, window.networkInChart, inValue);
-    }
-    
-    if (window.networkOutChart && window.networkOutData) {
-        updateChartData(window.networkOutData, window.networkOutChart, outValue);
-    }
-    
-    // Mettre à jour les textes
-    if (networkInElement) networkInElement.textContent = formatNetworkSpeed(inValue * 1024);
-    if (networkOutElement) networkOutElement.textContent = formatNetworkSpeed(outValue * 1024);
-}
-
-/**
- * Mise à jour des données des graphiques
- */
+// Mise à jour des données des graphiques
 function updateChartData(dataArray, chart, newValue) {
-    // Utiliser une approche simple et fiable: ajouter à droite, supprimer à gauche
     dataArray.push(parseFloat(newValue));
     dataArray.shift();
     
-    // Mettre à jour simplement les données du graphique
     chart.data.datasets[0].data = [...dataArray];
     
-    // Mise à jour du graphique sans animation pour un déplacement fluide
     chart.update('none');
     
-    // Force a resize after update to ensure visibility
     setTimeout(() => {
         if (chart && typeof chart.resize === 'function') {
             chart.resize();
@@ -542,29 +452,21 @@ function updateChartData(dataArray, chart, newValue) {
     }, 50);
 }
 
-/**
- * Mise à jour des couleurs des graphiques lors du changement de thème
- */
+// Mise à jour des couleurs des graphiques lors du changement de thème
 window.updateChartsTheme = function() {
     const theme = document.documentElement.getAttribute('data-theme') || 'dark';
     
-    // Couleurs communes basées sur le thème
     const gridColor = theme === 'dark' ? 'rgba(255, 255, 255, 0.1)' : 'rgba(0, 0, 0, 0.1)';
     const textColor = theme === 'dark' ? 'rgba(255, 255, 255, 0.6)' : 'rgba(0, 0, 0, 0.6)';
     const legendColor = theme === 'dark' ? 'rgba(255, 255, 255, 0.8)' : 'rgba(0, 0, 0, 0.8)';
     
-    // Mise à jour de tous les graphiques
     const allCharts = [window.cpuChart, window.ramChart, window.networkChart];
     
     allCharts.forEach(chart => {
         if (chart) {
-            // Mise à jour des couleurs de la grille
             chart.options.scales.y.grid.color = gridColor;
-            
-            // Mise à jour des couleurs du texte
             chart.options.scales.y.ticks.color = textColor;
             
-            // Mise à jour des légendes
             if (chart.options.plugins.legend.display) {
                 chart.options.plugins.legend.labels.color = legendColor;
             }
@@ -576,9 +478,7 @@ window.updateChartsTheme = function() {
 
 // ==== UTILITAIRES ====
 
-/**
- * Formatage des octets en unités lisibles (Ko, Mo, Go)
- */
+// Formatage des octets en unités lisibles
 function formatBytes(bytes, decimals = 2) {
     if (bytes === 0) return '0 Bytes';
     
@@ -591,9 +491,7 @@ function formatBytes(bytes, decimals = 2) {
     return parseFloat((bytes / Math.pow(k, i)).toFixed(dm)) + ' ' + sizes[i];
 }
 
-/**
- * Formatage de la vitesse réseau
- */
+// Formatage de la vitesse réseau
 function formatNetworkSpeed(bytesPerSec) {
     if (bytesPerSec < 1024) {
         return bytesPerSec.toFixed(0) + ' B/s';
@@ -604,17 +502,12 @@ function formatNetworkSpeed(bytesPerSec) {
     }
 }
 
-/**
- * Formatage du temps d'activité
- * Modifié pour accepter à la fois les secondes et les chaînes formatées
- */
+// Formatage du temps d'activité
 function formatUptime(uptime) {
-    // Si c'est déjà une chaîne formatée, la retourner
     if (typeof uptime === 'string') {
         return uptime;
     }
     
-    // Sinon, formatter les secondes
     if (typeof uptime !== 'number') return 'N/A';
     
     const days = Math.floor(uptime / 86400);
@@ -632,14 +525,11 @@ function formatUptime(uptime) {
 
 // ==== GESTION DES FICHIERS ====
 
-/**
- * Upload d'un fichier au serveur
- */
+// Upload d'un fichier au serveur
 function uploadFile() {
     let file = document.getElementById("fileInput").files[0];
     if (!file) return alert("Sélectionne un fichier");
 
-    // Créer un div d'état de chargement
     const uploadStatus = document.createElement('div');
     uploadStatus.className = 'upload-status';
     uploadStatus.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Envoi en cours...';
@@ -667,9 +557,7 @@ function uploadFile() {
 
 // ==== STATUT DU SERVEUR ====
 
-/**
- * Mise à jour du statut du serveur
- */
+// Mise à jour visuelle du statut du serveur
 function updateServerStatus(isOnline) {
     const statusElement = document.getElementById('serverStatus');
     if (statusElement) {

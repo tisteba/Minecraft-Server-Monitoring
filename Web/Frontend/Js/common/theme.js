@@ -16,9 +16,7 @@ document.addEventListener('DOMContentLoaded', function() {
     }
 });
 
-/**
- * Bascule entre les thèmes clair et sombre
- */
+// Bascule entre les thèmes clair et sombre
 function toggleTheme() {
     const currentTheme = document.documentElement.getAttribute('data-theme') || 'dark';
     const newTheme = currentTheme === 'dark' ? 'light' : 'dark';
@@ -34,9 +32,7 @@ function toggleTheme() {
     }
 }
 
-/**
- * Met à jour l'icône du bouton de thème
- */
+// Met à jour l'icône du bouton de thème
 function updateThemeIcon(theme) {
     const themeToggle = document.getElementById('themeToggle');
     if (themeToggle) {
@@ -49,9 +45,7 @@ function updateThemeIcon(theme) {
     }
 }
 
-/**
- * Obtient les couleurs à utiliser en fonction du thème
- */
+// Obtient les couleurs à utiliser en fonction du thème
 function getThemeColors(theme) {
     if (theme === 'dark') {
         return {

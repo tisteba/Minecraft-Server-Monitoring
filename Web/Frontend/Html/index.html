@@ -4,23 +4,14 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>MineServer - Tableau de bord</title>
-    <!-- Styles communs -->
     <link rel="stylesheet" href="../Css/common/base.css">
     <link rel="stylesheet" href="../Css/common/components.css">
-    <!-- Styles spécifiques -->
     <link rel="stylesheet" href="../Css/pages/dashboard.css">
     <link rel="stylesheet" href="../Css/pages/presentation.css">
     <link rel="stylesheet" href="../Css/components/terminal.css">
-
-    <!-- Xterm.js CSS -->
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/xterm@5.1.0/css/xterm.css">
-
-    <!-- Icônes -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css">
-    <!-- Dépendances JS -->
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
-    
-    <!-- Xterm.js -->
     <script src="https://cdn.jsdelivr.net/npm/xterm@5.1.0/lib/xterm.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/xterm-addon-fit@0.7.0/lib/xterm-addon-fit.js"></script>
 </head>
@@ -54,25 +45,21 @@
 
     <!-- Contenu principal -->
     <main class="dashboard-container">
-        <!-- En-tête avec logo et statut -->
         <header class="dashboard-header">
             <div class="header-content">
                 <div class="project-logo">
                     <i class="fas fa-cube"></i>
                 </div>
                 <h1>MineServer</h1>
-                <!-- Statut déplacé vers la carte terminal -->
             </div>
         </header>
 
-        <!-- Tableau de bord principal - Structure en grille -->
+        <!-- Tableau de bord -->
         <div class="dashboard-grid">
-            <!-- Colonne de gauche: Terminal et contrôles -->
             <div class="dashboard-column terminal-column">
                 <div class="dashboard-card">
                     <div class="card-header">
                         <h2><i class="fas fa-terminal"></i> Terminal</h2>
-                        <!-- Déplacement du statut du serveur ici -->
                         <span class="server-status status-offline" id="serverStatus">Offline</span>
                     </div>
                     <div class="terminal-section">
@@ -118,9 +105,8 @@
                 </div>
             </div>
             
-            <!-- Colonne de droite: Métriques et fichiers -->
+            <!-- Métriques et fichiers -->
             <div class="dashboard-column metrics-column">
-                <!-- Cartes pour les métriques - Avec classe pour cibler spécifiquement -->
                 <div class="dashboard-card metrics-system-card">
                     <div class="card-header">
                         <h2><i class="fas fa-chart-line"></i> Métriques Système</h2>
@@ -159,7 +145,6 @@
                             <div class="resource-header">
                                 <i class="fas fa-exchange-alt"></i> 
                                 <span>Trafic Réseau</span>
-                                <!-- Ajouter des valeurs en temps réel pour le réseau -->
                                 <div class="network-values">
                                     <span class="network-in">↓ <span id="networkIn">0 KB/s</span></span>
                                     <span class="network-out">↑ <span id="networkOut">0 KB/s</span></span>
@@ -186,18 +171,15 @@
             </div>
         </div>
     </main>
-
     <footer class="site-footer">
-        <p>&copy; 2023 MineServer - Fait avec <i class="fas fa-heart"></i> par l'équipe YNOV</p>
+        <p>&copy; 2025 MineServer - Fait avec <i class="fas fa-heart"></i> par l'équipe YNOV</p>
     </footer>
 
-    <!-- Scripts -->
     <script src="/socket.io/socket.io.js"></script>
     <script src="../Js/common/error-handler.js"></script>
     <script src="../Js/common/connection-check.js"></script>
     <script src="../Js/common/theme.js"></script>
     <script src="../Js/common/navigation.js"></script>
-    <!-- Reverse the order to load dashboard.js first so it initializes the global socket -->
     <script src="../Js/pages/dashboard.js"></script>
     <script src="../Js/pages/terminal.js"></script>
 </body>

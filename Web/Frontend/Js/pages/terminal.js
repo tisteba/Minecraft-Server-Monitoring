@@ -1,5 +1,5 @@
 /**
- * Gestion du terminal interactif avec Xterm.js
+ * Terminal interactif avec Xterm.js
  */
 
 let terminal;
@@ -42,9 +42,7 @@ document.addEventListener('DOMContentLoaded', () => {
     });
 });
 
-/**
- * Initialise le terminal Xterm.js
- */
+// Initialise le terminal Xterm.js
 function initializeXterm() {
     const terminalContainer = document.getElementById('terminal-container');
     if (!terminalContainer) {
@@ -121,9 +119,7 @@ function initializeXterm() {
     terminal.writeln('Initialisation de la connexion...');
 }
 
-/**
- * Configure les écouteurs de socket pour le terminal
- */
+// Configure les écouteurs de socket pour le terminal
 function setupSocketListeners() {
     // Utiliser le socket global au lieu de la variable locale
     const socket = window.socket;
@@ -200,9 +196,7 @@ function setupSocketListeners() {
     });
 }
 
-/**
- * Ajoute un bouton de reconnexion au terminal
- */
+// Ajoute un bouton de reconnexion
 function addReconnectButton() {
     // Utiliser le conteneur dédié au bouton de reconnexion
     const reconnectContainer = document.getElementById('reconnect-container');
@@ -230,9 +224,7 @@ function addReconnectButton() {
     reconnectContainer.appendChild(reconnectButton);
 }
 
-/**
- * Retourne le thème du terminal en fonction du thème actuel de l'application
- */
+// Retourne le thème du terminal en fonction du thème actuel
 function getTerminalTheme() {
     const theme = document.documentElement.getAttribute('data-theme') || 'dark';
     
@@ -285,16 +277,14 @@ function getTerminalTheme() {
     }
 }
 
-/**
- * Met à jour le thème du terminal
- */
+// Met à jour le thème du terminal
 function updateTerminalTheme() {
     if (terminal) {
         terminal.setOption('theme', getTerminalTheme());
     }
 }
 
-// Ajouter la fonction de mise à jour du thème du terminal
+// Extension de la fonction de mise à jour du thème
 if (window.updateChartsTheme) {
     const originalUpdateTheme = window.updateChartsTheme;
     window.updateChartsTheme = function() {

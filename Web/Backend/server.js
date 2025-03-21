@@ -9,9 +9,8 @@ const path = require("path");
 
 const app = express();
 const server = http.createServer(app);
-// Fixed duplicate declaration - using only one io configuration with all needed options
 const io = new Server(server, {
-    transports: ['websocket'], // Force WebSocket to avoid polling issues
+    transports: ['websocket'], 
     pingTimeout: 60000,
     pingInterval: 25000,
     cors: {
@@ -23,7 +22,7 @@ const io = new Server(server, {
 app.use(express.static("../Frontend"));
 app.use(fileUpload());
 
-// Améliorations de la configuration SSH pour éviter les erreurs de connexion
+// Configuration SSH
 const sshConfig = {
     host: "wilfart.fr",
     port: 2010,
@@ -45,7 +44,7 @@ app.get("/", (req, res) => {
 });
 
 app.get("/monitoring", (req, res) => {
-  res.sendFile(path.join(__dirname, "../Frontend/Html/index.html"));
+    res.sendFile(path.join(__dirname, "../Frontend/Html/index.html"));
 });
 
 // Connexion SSH & Terminal interactif
@@ -328,6 +327,7 @@ io.on("connection", (socket) => {
     // Démarrer la connexion initiale
     connectSSH();
 
+    // Entrées du terminal
     socket.on("terminal-input", (data) => {
         if (sshStream) {
             sshStream.write(data);
@@ -338,12 +338,14 @@ io.on("connection", (socket) => {
         }
     });
 
+    // Redimensionnement du terminal
     socket.on("terminal-resize", (data) => {
         if (sshStream) {
             sshStream.setWindow(data.rows, data.cols);
         }
     });
 
+    // Contrôle du serveur
     socket.on("serverControl", (action) => {
         console.log(`Commande serveur reçue: ${action}`);
         
@@ -391,13 +393,7 @@ io.on("connection", (socket) => {
         }
     });
 
-    // Vérification initiale du statut du serveur
-    checkServerStatus(ssh, socket);
-
-    // Remplacer l'ancien intervalle de ressources par notre nouvelle fonction
-    clearInterval(resourceInterval);
-    
-    // Fonction pour vérifier le statut du serveur Minecraft (en utilisant systemctl directement)
+    // Vérification du statut du serveur Minecraft
     function checkMinecraftStatus() {
         if (!ssh || !isConnected) {
             socket.emit("serverStatus", "offline");
@@ -431,64 +427,13 @@ io.on("connection", (socket) => {
         }
     });
 
-    // Corriger la fonction checkServerStatus pour utiliser checkMinecraftStatus directement
-    function checkServerStatus(ssh, socket) {
-        checkMinecraftStatus();
-    }
-
-    // Envoi des données de CPU/RAM et autres statistiques - FIX
-    resourceInterval = setInterval(() => {
-        // Utiliser les vraies données uniquement si la connexion SSH est établie
-        if (isConnected) {
-            // getSystemInfo sera appelé après la connexion SSH réussie
-            return;
-        }
-        
-        try {
-            // Mode de secours : utiliser les données simulées si SSH n'est pas connecté
-            console.log("Utilisation des données simulées (SSH non connecté)");
-            
-            // CPU et RAM
-            os.cpuUsage((v) => {
-                const cpuValue = v * 100;
-                socket.emit("cpuUsage", cpuValue);
-            });
-            
-            const ramValue = (1 - os.freememPercentage()) * 100;
-            socket.emit("ramUsage", ramValue);
-            
-            // Autres données simulées
-            socket.emit("diskInfo", {
-                total: 100 * 1024 * 1024 * 1024,
-                used: 42 * 1024 * 1024 * 1024,
-                free: 58 * 1024 * 1024 * 1024,
-                usedPercent: 42
-            });
-            
-            socket.emit("networkStats", {
-                rx_sec: Math.floor(Math.random() * 500000) + 50000,
-                tx_sec: Math.floor(Math.random() * 200000) + 30000
-            });
-            
-            socket.emit("serverInfo", {
-                ip: "Non connecté",
-                uptime: "Non disponible",
-                activePlayers: 0,
-                maxPlayers: 20
-            });
-            
-            socket.emit("serverStatus", "offline");
-        } catch (error) {
-            console.error("Error sending simulated data:", error);
-        }
-    }, 3000);
-
     // Reconnexion SSH
     socket.on("reconnect-ssh", () => {
         console.log("Tentative de reconnexion SSH demandée par le client");
         connectSSH();
     });
 
+    // Déconnexion du client
     socket.on("disconnect", () => {
         console.log("Déconnexion du client WebSocket");
         clearTimeout(reconnectTimeout);
@@ -523,7 +468,6 @@ function parseHumanReadableToBytes(sizeStr) {
     };
     
     try {
-        // Extraire le nombre et l'unité
         const match = sizeStr.match(/^(\d+(?:\.\d+)?)([BKMGT])/i);
         if (match) {
             const size = parseFloat(match[1]);
@@ -531,7 +475,6 @@ function parseHumanReadableToBytes(sizeStr) {
             return size * units[unit];
         }
         
-        // Gestion simple si la regex ne correspond pas
         const numericValue = parseFloat(sizeStr);
         if (!isNaN(numericValue)) {
             return numericValue;

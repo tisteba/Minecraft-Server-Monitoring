@@ -20,9 +20,7 @@ document.addEventListener('DOMContentLoaded', function() {
     markActiveMenuLink();
 });
 
-/**
- * Ouvre et ferme le menu latéral
- */
+// Ouvre et ferme le menu latéral
 function toggleMenu() {
     const menu = document.getElementById('sideMenu');
     const overlay = document.getElementById('overlay');
@@ -36,9 +34,7 @@ function toggleMenu() {
     }
 }
 
-/**
- * Marque le lien de menu actif en fonction de l'URL courante
- */
+// Marque le lien de menu actif en fonction de l'URL courante
 function markActiveMenuLink() {
     const currentPath = window.location.pathname;
     const menuLinks = document.querySelectorAll('.menu-items a');
